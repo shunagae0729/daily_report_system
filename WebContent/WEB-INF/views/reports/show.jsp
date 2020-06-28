@@ -5,7 +5,7 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${report != null}">
-                <h2>日報　詳細ページ</h2>
+                <h2>日報詳細ページ</h2>
 
                 <table>
                     <tbody>
@@ -35,7 +35,27 @@
                                 <fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
-                    </tbody>
+                        <tr>
+                        <th>お気に入り登録</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${iine.report.id != null}">
+                                        <form method="POST" action="<c:url value='/iine/destroy?id=${report.id}' />">
+                                        <input type="hidden" name="_token" value="${_token}" />
+                                        <button onclick="location.href='/iine/destroy'">いいね！を取り消す</button>
+                                        </form>
+                                </c:when>
+                            <c:otherwise>
+                                       <form method="POST" action="<c:url value='/iine/create?id=${report.id}' />">
+                                       <input type="hidden" name="_token" value="${_token}" />
+                                       <button onclick="location.href='/iine/create'">いいね！</button>
+                                        </form>
+                            </c:otherwise>
+                        </c:choose>
+                        </td>
+
+                         </tr>
+                        </tbody>
                 </table>
 
                 <c:if test="${sessionScope.login_employee.id == report.employee.id}">
@@ -45,7 +65,7 @@
             <c:otherwise>
                 <h2>お探しのデータは見つかりませんでした。</h2>
             </c:otherwise>
-        </c:choose>
+          </c:choose>
 
         <p><a href="<c:url value="/reports/index" />">一覧に戻る</a></p>
     </c:param>
