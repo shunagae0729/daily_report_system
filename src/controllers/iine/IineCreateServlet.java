@@ -42,11 +42,9 @@ public class IineCreateServlet extends HttpServlet {
             i.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
 
-
             Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 
             i.setReport((Report)request.getSession().getAttribute("login_employee"));
-
 
              em.getTransaction().begin();
              em.persist(i);

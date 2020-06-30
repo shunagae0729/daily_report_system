@@ -38,6 +38,8 @@ public class Iine {
     @JoinColumn(name = "report_id", nullable = false)
     private Report report;
 
+
+
     public Integer getId() {
         return id;
     }
