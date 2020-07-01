@@ -3,6 +3,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
+    <c:if test="${flush != null}">
+            <div id="flush_success">
+                <c:out value="${flush}"></c:out>
+            </div>
+        </c:if>
         <c:choose>
             <c:when test="${report != null}">
                 <h2>日報詳細ページ</h2>
@@ -39,19 +44,19 @@
                         <th>お気に入り登録</th>
                         <td>
                             <c:choose>
-                                <c:when test="${iine.report.id != null}">
+                                <c:when test="${iine.report != null}">
                                         <form method="POST" action="<c:url value='/iine/destroy?id=${report.id}' />">
                                         <input type="hidden" name="_token" value="${_token}" />
                                         <button onclick="location.href='/iine/destroy'">いいね！を取り消す</button>
                                         </form>
                                 </c:when>
-                            <c:otherwise>
+                                <c:otherwise>
                                        <form method="POST" action="<c:url value='/iine/create?id=${report.id}' />">
                                        <input type="hidden" name="_token" value="${_token}" />
                                        <button onclick="location.href='/iine/create'">いいね！</button>
                                         </form>
-                            </c:otherwise>
-                        </c:choose>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
 
                          </tr>

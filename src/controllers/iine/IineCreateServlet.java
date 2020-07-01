@@ -3,6 +3,7 @@ package controllers.iine;
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,9 +42,10 @@ public class IineCreateServlet extends HttpServlet {
 
             i.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
-            i.setReport((Report)request.getSession().getAttribute("login_employee"));
-
             Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
+
+            i.setReport((Report)r);
+
 
 
              em.getTransaction().begin();
@@ -52,9 +54,18 @@ public class IineCreateServlet extends HttpServlet {
              em.close();
              request.getSession().setAttribute("flush", "いいねしました。");
 
+             request.setAttribute("report", r);
              request.setAttribute("_token", request.getSession().getId());
 
-             response.sendRedirect(request.getContextPath() + "/reports/show?"+ request.getParameter("id"));
+             if(request.getSession().getAttribute("flush") != null) {
+                 request.setAttribute("flush", request.getSession().getAttribute("flush"));
+                 request.getSession().removeAttribute("flush");
+             }
+
+             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
+             rd.forward(request, response);
+
+             //response.sendRedirect(request.getContextPath() + "/reports/show?"+ request.getParameter("id"));
 
           }
 
