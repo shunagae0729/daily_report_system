@@ -44,10 +44,10 @@
                         <th>お気に入り登録</th>
                         <td>
                             <c:choose>
-                                <c:when test="${iine.report != null}">
+                                <c:when test="${iines_count == null}">
                                         <form method="POST" action="<c:url value='/iine/destroy?id=${report.id}' />">
                                         <input type="hidden" name="_token" value="${_token}" />
-                                        <button onclick="location.href='/iine/destroy'">いいね！を取り消す</button>
+                                        <button type="submit" disabled>いいね！済</button>
                                         </form>
                                 </c:when>
                                 <c:otherwise>

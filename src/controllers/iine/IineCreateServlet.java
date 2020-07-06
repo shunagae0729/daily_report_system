@@ -56,19 +56,19 @@ public class IineCreateServlet extends HttpServlet {
 
              request.setAttribute("report", r);
              request.setAttribute("_token", request.getSession().getId());
+             request.setAttribute("iine.report", i);
 
              if(request.getSession().getAttribute("flush") != null) {
                  request.setAttribute("flush", request.getSession().getAttribute("flush"));
                  request.getSession().removeAttribute("flush");
              }
 
+
+             //response.sendRedirect(request.getContextPath() + "/reports/show?id = report.id"+ request.getParameter("id"));
+
              RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
              rd.forward(request, response);
-
-             //response.sendRedirect(request.getContextPath() + "/reports/show?"+ request.getParameter("id"));
-
           }
-
     }
 
 }

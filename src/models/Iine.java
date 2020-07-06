@@ -14,13 +14,13 @@ import javax.persistence.Table;
 @Table(name = "iines")
 @NamedQueries({
     @NamedQuery(
-            name = "getIine",
-            query = "SELECT i FROM Iine AS i ORDER BY i.id DESC"
-            ),
-    @NamedQuery(
             name = "checkId",
             query = "SELECT i FROM Iine AS i WHERE i.employee = :employee AND i.report = :report"
-            )
+            ),
+    @NamedQuery(
+            name = "getIinesCount",
+            query = "SELECT COUNT(i) FROM Iine AS i WHERE i.report = :report AND i.employee = :employee"
+            ),
 })
 
 @Entity

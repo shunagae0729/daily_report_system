@@ -3,6 +3,7 @@ package controllers.iine;
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,7 +46,8 @@ public class IineDestroyServlet extends HttpServlet {
 
             request.setAttribute("_token", request.getSession().getId());
 
-            response.sendRedirect(request.getContextPath() + "/reports/show?id"+ request.getParameter("id"));
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
+            rd.forward(request, response);
         }
     }
 }
