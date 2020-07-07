@@ -18,8 +18,12 @@ import javax.persistence.Table;
             query = "SELECT i FROM Iine AS i WHERE i.employee = :employee AND i.report = :report"
             ),
     @NamedQuery(
-            name = "getIinesCount",
+            name = "getIine",
             query = "SELECT COUNT(i) FROM Iine AS i WHERE i.report = :report AND i.employee = :employee"
+            ),
+    @NamedQuery(
+            name = "getCount",
+            query = "SELECT COUNT(i) FROM Iine AS i WHERE i.report = :report"
             ),
 })
 

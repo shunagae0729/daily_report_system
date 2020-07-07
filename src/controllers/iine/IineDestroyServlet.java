@@ -3,7 +3,6 @@ package controllers.iine;
 import java.io.IOException;
 
 import javax.persistence.EntityManager;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +35,7 @@ public class IineDestroyServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Iine i = em.find(Iine.class, (Integer)(request.getSession().getAttribute("login_employee")));
+            Iine i = em.find(Iine.class, (Integer)(request.getSession().getAttribute("iines_count")));
 
             em.getTransaction().begin();
             em.remove(i);
@@ -46,8 +45,12 @@ public class IineDestroyServlet extends HttpServlet {
 
             request.setAttribute("_token", request.getSession().getId());
 
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/show.jsp");
-            rd.forward(request, response);
+            request.getSession().removeAttribute("iines_count");
+            request.getSession().removeAttribute("get_iine");
+
+
+            response.sendRedirect(request.getContextPath() + "/reports/show?id="+ request.getParameter("id"));
+
         }
     }
 }

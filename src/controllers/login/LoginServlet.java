@@ -33,7 +33,6 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
-    // ログイン画面を表示
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("_token", request.getSession().getId());
         request.setAttribute("hasError", false);
@@ -49,9 +48,7 @@ public class LoginServlet extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      */
-    // ログイン処理を実行
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 認証結果を格納する変数
         Boolean check_result = false;
 
         String code = request.getParameter("code");
@@ -67,7 +64,6 @@ public class LoginServlet extends HttpServlet {
                     (String)this.getServletContext().getAttribute("salt")
                     );
 
-            // 社員番号とパスワードが正しいかチェックする
             try {
                 e = em.createNamedQuery("checkLoginCodeAndPassword", Employee.class)
                       .setParameter("code", code)
@@ -83,7 +79,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         if(!check_result) {
-            // 認証できなかったらログイン画面に戻る
             request.setAttribute("_token", request.getSession().getId());
             request.setAttribute("hasError", true);
             request.setAttribute("code", code);
@@ -91,7 +86,6 @@ public class LoginServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
             rd.forward(request, response);
         } else {
-            // 認証できたらログイン状態にしてトップページへリダイレクト
             request.getSession().setAttribute("login_employee", e);
 
             request.getSession().setAttribute("flush", "ログインしました。");

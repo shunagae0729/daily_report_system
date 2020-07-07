@@ -39,16 +39,22 @@ public class ReportsShowServlet extends HttpServlet {
 
         Employee login_employee = (Employee)request.getSession().getAttribute("login_employee");
 
-        long iines_count = (long)em.createNamedQuery("getIinesCount", Long.class)
+        long iines_count = (long)em.createNamedQuery("getIine", Long.class)
                 .setParameter("report" , r)
                 .setParameter("employee", login_employee)
                 .getSingleResult();
+
+        long get_count = (long)em.createNamedQuery("getCount", Long.class)
+                .setParameter("report" , r)
+                .getSingleResult();
+
 
         em.close();
 
         request.setAttribute("iines_count", iines_count);
         request.setAttribute("report", r);
         request.setAttribute("_token", request.getSession().getId());
+        request.setAttribute("get_count", get_count);
 
         if(request.getSession().getAttribute("flush") != null) {
             request.setAttribute("flush", request.getSession().getAttribute("flush"));
